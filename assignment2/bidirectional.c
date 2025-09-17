@@ -7,7 +7,7 @@
 int main() {
 	int pipe1[2]; //Parent to chikd
 	int pipe2[2]; //Child to parent
-	pip_t pid;
+
 
 	//Create both pipes
 	if (pipe(pipe1) == -1 || pipe(pipe2) == -1) {
@@ -47,7 +47,7 @@ int main() {
 		close(pipe2[1]);
 
 		char *message = "Hello from parent"; //Send message to child
-		write(pipe1[1], messagem strlen(message));
+		write(pipe1[1], message, strlen(message));
 
 		char buffer[100]; //Read response from child
 		ssize_t n = read(pipe2[0], buffer, sizeof(buffer)-1);
