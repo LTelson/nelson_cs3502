@@ -3,6 +3,8 @@ a.out
 producer
 consumer
 bidirectional
+consumer_sig
+producer_sig
 *.exe
 
 #Object files
