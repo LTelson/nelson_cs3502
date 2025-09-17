@@ -1,0 +1,15 @@
+#Compiled binaries
+a.out
+producer
+*.exe
+
+#Object files
+*.o
+
+#Backup files
+*~
+*.bak
+
+#Editor temporary files
+*.swp
+*.swo
