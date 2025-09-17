@@ -2,6 +2,7 @@
 a.out
 producer
 consumer
+bidirectional
 *.exe
 
 #Object files

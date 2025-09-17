@@ -3,12 +3,39 @@
 #include <unistd.h>
 #include <string.h>
 #include <getopt.h>
+#include <signal.h>
+
+volatile sig_atomic_t shutdown_flag = 0; //Triggered by SIGINT
+volatile sig_atomic_t stats_flag = 0; //Triggered by SIGUSR1
+
+void handle_sigint(int sig){
+	shutdown_flag = 1;
+}
+
+void handle_sigusr1(int sig){
+	stats_flag = 1;
+}
 
 int main(int argc, char *argv[]) {
 	FILE * input = stdin;
 	int buffer_size=4096;
 	char opt;
 
+	struct sigaction sa_int, sa_usr1;
+
+	//SIGINT Ctrl+C Shutdown
+	sa_int.sa_handler = handle_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags=0;
+	sigaction(SIGINT, &sa_int, NULL);
+
+	//SIGUSR1 Print stats
+	sa_usr1.sa_handler = handle_sigusr1;
+	sigemptyset(&sa_usr1.sa_mask);
+	sa_usr1.sa_flags = 0;
+	sigaction(SIGUSR1, &sa_usr1, NULL);
+
+	//Loops
 	while ((opt = getopt(argc,argv,"f:b:")) != -1) {
 		switch(opt) {
 			case 'f':
